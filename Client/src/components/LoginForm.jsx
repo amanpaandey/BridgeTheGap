@@ -12,38 +12,42 @@ import { Label } from "@/components/ui/label"
 
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import {login as authLogin} from "../store/authSlice"
+import { login as authLogin } from "../store/authSlice"
 import { useNavigate } from "react-router-dom"
-import {toast} from "react-hot-toast"
+import { toast } from "react-hot-toast"
 import { Link } from "react-router-dom"
 
-
 export function LoginForm() {
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
- 
 
   const handleUsernameChange = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setUsername(e.target.value);
   };
   const handlePasswordChange = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setPassword(e.target.value);
   };
 
-
-
-  
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await dispatch(authLogin({ username, password })).unwrap();
+      toast.success("Login Successful");
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      toast.error("Couldn't log in");
+      navigate("/login");
+    }
+  };
 
   return (
     <Card className="w-full max-w-sm">
-      
       <CardHeader>
         <CardTitle className="text-2xl">Login</CardTitle>
         <CardDescription>
@@ -53,33 +57,37 @@ export function LoginForm() {
       <CardContent className="grid gap-4">
         <div className="grid gap-2">
           <Label htmlFor="email">Username</Label>
-          <Input 
-          value={username} 
-          onChange={handleUsernameChange} id="email" type="email" placeholder="m@example.com" required />
+          <Input
+            value={username}
+            onChange={handleUsernameChange}
+            id="email"
+            type="email"
+            placeholder="m@example.com"
+            required
+          />
         </div>
         <div className="grid gap-2">
           <Label htmlFor="password">Password</Label>
-          <Input 
-          value={password}
-          onChange={handlePasswordChange} id="password" type="password" required />
+          <Input
+            value={password}
+            onChange={handlePasswordChange}
+            id="password"
+            type="password"
+            required
+          />
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full"
-        onClick={(e)=>{
-          e.preventDefault()
-          dispatch(authLogin({username,password}))
-          toast.success("Login Successfull")
-          navigate("/")
-        }}
-        >Sign in</Button>
+        <Button className="w-full" onClick={handleSubmit}>
+          Sign in
+        </Button>
       </CardFooter>
       <div className="mb-2 text-center text-sm">
-          Don&#39;t have an account?{" "}
-          <Link to="/signup" className="underline">
-            Sign up
-          </Link>
-        </div>
+        Don&#39;t have an account?{" "}
+        <Link to="/signup" className="underline">
+          Sign up
+        </Link>
+      </div>
     </Card>
-  )
+  );
 }
