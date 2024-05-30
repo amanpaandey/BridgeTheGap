@@ -4,6 +4,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 
+
 import { cloudinaryHandler, deleteOnCloudinary } from "../utils/cloudinary.js";
 
 const generateAccessTokenAndrefreshToken = async (userId) => {
@@ -264,10 +265,45 @@ const loginNgo = asyncHandler(async (req, res) => {
   });
   
   const getCurrentNgo = asyncHandler(async (req, res) => {
+    // Ensure req.user and req.user._id are defined
+    if (!req.user || !req.user._id) {
+        throw new ApiError(400, "User information is missing");
+    }
+
+    // Get the NGO ID from req.user
+    const ngo = await Ngo.findById(req.user._id);
+
+    if (!ngo) {
+        throw new ApiError(404, "NGO not found");
+    }
+
+    // Apply aggregation pipelines to get all the posts and append them to the user
+    const ngoProfile = await Ngo.aggregate([
+        {
+            $match: {
+                _id: req.user._id,
+            }
+        },
+        {
+            $lookup: {
+                from: "posts",  // Ensure this is the correct collection name
+                localField: "post",
+                foreignField: "_id",
+                as: "post",
+            }
+        }
+    ]);
+
+    // Ensure aggregation result is not empty
+    if (!ngoProfile || ngoProfile.length === 0) {
+        throw new ApiError(404, "NGO profile not found");
+    }
+
     return res
-      .status(200)
-      .json(new ApiResponse(200, req.user, "current Ngo fetched successfully"));
-  });
+        .status(200)
+        .json(new ApiResponse(200, ngoProfile[0], "NGO profile fetched successfully"));
+});
+
 
   const updateNgoDetails = asyncHandler(async (req, res) => {
     const { email, username,phone,address,description, } = req.body;
@@ -400,8 +436,54 @@ const loginNgo = asyncHandler(async (req, res) => {
 }
   );
 
+  const getAllNgo = asyncHandler(async (req, res) => {
+    const ngo = await Ngo.find({});
+    return res.status(200).json(new ApiResponse(200, ngo, "Ngo found successfully"));
+  })
 
+  
 
+  const getNgoByID = asyncHandler(async (req, res) => {
+    // Ensure req.user and req.user._id are defined
+
+    const {id} = req.params;
+    if (!id) {
+        throw new ApiError(400, "User information is missing");
+    }
+
+    // Get the NGO ID from req.user
+    const ngo = await Ngo.findById(id);
+
+    if (!ngo) {
+        throw new ApiError(404, "NGO not found");
+    }
+
+    // Apply aggregation pipelines to get all the posts and append them to the user
+    const ngoProfile = await Ngo.aggregate([
+        {
+            $match: {
+                _id:ngo._id,
+            }
+        },
+        {
+            $lookup: {
+                from: "posts",  // Ensure this is the correct collection name
+                localField: "post",
+                foreignField: "_id",
+                as: "post",
+            }
+        }
+    ]);
+
+    // Ensure aggregation result is not empty
+    if (!ngoProfile || ngoProfile.length === 0) {
+        throw new ApiError(404, "NGO profile not found");
+    }
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, ngoProfile[0], "NGO profile fetched successfully"));
+});
 
 
 
@@ -419,6 +501,9 @@ export {
     updateNgoDetails,
     updateNgoAvatar,
     getNgoImages,
-    ngoUploadImage
+    ngoUploadImage,
+    getAllNgo,
+    getNgoByID
+    
 
 };

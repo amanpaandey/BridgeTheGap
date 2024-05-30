@@ -10,6 +10,8 @@ import {
   updateNgoAvatar,
   getNgoImages,
   ngoUploadImage,
+  getAllNgo,
+  getNgoByID
 } from "../controllers/ngo.controller.js";
 import { verifyJWTNGO } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -54,5 +56,9 @@ router.route("/ngo-upload-image").post(
   ]),
   ngoUploadImage
 );
+
+router.route("/get-all-ngos").get(getAllNgo);
+
+router.route("/get-ngo/:id").get(getNgoByID);
 
 export default router;

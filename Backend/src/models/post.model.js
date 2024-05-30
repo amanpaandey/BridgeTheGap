@@ -15,7 +15,7 @@ const postSchema = new Schema(
             type: String,
             required: true,
         },
-        image: {
+        coverImage: {
             type: String, //cloudinary image
             required: true,
         },

@@ -15,7 +15,14 @@ import
   Login,
   Signup,
   Ngopage,
-  Post
+  Post,
+  NgoDashboard,
+  
+  UserProfile,
+  NgoProfilePage,
+  PostPage,
+  CreatePost,
+  NgoPublicProfile
 
 } from "./Pages/index.js"
 import NgoSignup from "./components/NgoSignup.jsx"
@@ -35,11 +42,15 @@ const router = createBrowserRouter(
         },
         {
           path: 'explore-ngo',
-          element: <Ngopage />
+          element: <Ngopage />,
+          children:[
+           
+          ]
         },
         {
           path: 'post',
-          element: <Post />
+          element: <Post />,
+          
         },
         {
           path: 'about',
@@ -63,6 +74,30 @@ const router = createBrowserRouter(
         },{
           path: 'ngo-login',
           element: <NgoLogin />
+        },
+        {
+          path: 'ngo-dashboard',
+          element: <NgoDashboard />
+        },
+        {
+          path: 'profile/:id',
+          element: <UserProfile />
+        },
+        {
+          path: 'ngo-profile/:id',
+          element: <NgoProfilePage />
+        },
+        {
+          path: 'post/:id',
+          element: <PostPage />
+        },
+        {
+          path: 'post/create',
+          element: <CreatePost />
+        },
+        {
+          path: ':id',
+          element: <NgoPublicProfile />
         }
       ]
     }

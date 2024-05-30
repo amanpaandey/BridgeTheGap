@@ -11,7 +11,7 @@ import { addPost,
     router.route("/addPost").post(
         upload.fields([
             {
-                name: "postImage",
+                name: "coverImage",
                 maxCount: 1,
             },
         ]),
@@ -28,7 +28,7 @@ import { addPost,
     );
     router.route("/get-all-posts").get(getAllPosts);
 
-    router.route("/get-post/:postId").get(getOnepost);
+    router.route("/get-post/:id").get(getOnepost);
 
 
 
