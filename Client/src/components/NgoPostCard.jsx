@@ -43,7 +43,7 @@ function NgoPostCard(props) {
   
   props = props?.data
 
-  console.log(props);
+ 
 
 
   return (

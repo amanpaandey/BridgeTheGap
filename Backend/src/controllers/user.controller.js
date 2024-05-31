@@ -337,7 +337,39 @@ const registerUser = asyncHandler(async (req, res) => {
       .json(new ApiResponse(200, updatedUser, "Avatar updated successfully"));
   });
 
+const getLatesttUser = asyncHandler(async (req, res) => {
+  try {
+    
+    const latestUsers = await User.aggregate([
+      { $sort: { createdAt: -1 } }, // Sort users by createdAt field in descending order
+      { $limit: 3 } // Limit the result to the top 3 users
+    ]);
 
+    return res
+     .status(200)
+     .json(
+        new ApiResponse(200, latestUsers, "latest users fetched successfully")
+      );
+  } catch (error) {
+    
+    throw new ApiError(
+      500,
+      "Internal server error while fetching latest users " + error?.message
+    );
+  }
+})
+
+
+const userByID = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user) {
+    throw new ApiError(404, "user not found");
+  }
+  return res.
+   status(200)
+   .json(new ApiResponse(200, user, "user fetched successfully"));
+
+})
   
 
 
@@ -351,4 +383,6 @@ const registerUser = asyncHandler(async (req, res) => {
     getCurrentuser,
     updateAccountDetails,
     updateUserAvatar,
+    getLatesttUser,
+    userByID
   };

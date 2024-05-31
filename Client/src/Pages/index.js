@@ -14,6 +14,8 @@ import PostPage from "./PostPage"
 import CreatePost from "./CreatePost";
 import NgoPublicProfile from "./NgoPublicProfile";
 
+import UserPublicProfile from './UserPublicProfile';
+
 
 
 
@@ -32,5 +34,6 @@ export {
     UserProfile,
     NgoProfilePage,
     PostPage,
-    CreatePost
+    CreatePost,
+    UserPublicProfile
 }

@@ -22,7 +22,8 @@ import
   NgoProfilePage,
   PostPage,
   CreatePost,
-  NgoPublicProfile
+  NgoPublicProfile,
+  UserPublicProfile
 
 } from "./Pages/index.js"
 import NgoSignup from "./components/NgoSignup.jsx"
@@ -98,6 +99,10 @@ const router = createBrowserRouter(
         {
           path: ':id',
           element: <NgoPublicProfile />
+        },
+        {
+          path: 'userprofile/:id',
+          element: <UserPublicProfile />
         }
       ]
     }

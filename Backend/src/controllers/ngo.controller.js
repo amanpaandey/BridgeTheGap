@@ -485,7 +485,46 @@ const loginNgo = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, ngoProfile[0], "NGO profile fetched successfully"));
 });
 
+//get top three ngo based on posts
 
+const topthreeNgo = asyncHandler(async(req,res) => {
+
+  try {
+    const topNgos = await Ngo.aggregate([
+      {
+        $lookup: {
+          from: 'posts',
+          localField: 'posts',
+          foreignField: '_id',
+          as: 'postDetails'
+        }
+      },
+      {
+        $addFields: {
+          numberOfPosts: { $size: { $ifNull: ['$posts', []] } }
+        }
+      },
+      {
+        $lookup: {
+          from: 'posts',
+          localField: 'post',
+          foreignField: '_id',
+          as: 'postDetails'
+        }
+      },
+      { $sort: { numberOfPosts: -1 } },
+      { $limit: 3 }
+    ]);
+
+
+    return res.status(200).json(new ApiResponse(200, topNgos, "Top 3 Ngo fetched successfully"));
+  } catch (error) {
+    
+    throw new ApiError(500, "Internal server error while fetching top 3 ngo in ngo controller" + error?.message);
+
+  }
+
+})
 
 
 
@@ -503,7 +542,8 @@ export {
     getNgoImages,
     ngoUploadImage,
     getAllNgo,
-    getNgoByID
+    getNgoByID,
+    topthreeNgo
     
 
 };

@@ -1,15 +1,40 @@
 
 import Container from "../components/Container";
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
- 
-} from "@/components/ui/card"
+
+
+import { useState,useEffect } from "react";
+import axios from "axios";
+import NgoHomeCard from "@/components/Home/NgoHomeCard";
+import { Link } from "react-router-dom";
+import UserCard from "@/components/Home/UserCard";
 
 
 
 function Home() {
+
+  const [ngo, setNgo] = useState([]);
+  const [donor, setDonor] = useState([]); 
+
+  useEffect(() => {
+    axios.get("http://localhost:8000/api/v1/ngo/top-three-ngos")
+   .then((res) => {
+     setNgo(res.data);
+   });
+
+   axios.get("http://localhost:8000/api/v1/users/get-latest-users")
+   .then((res) => {
+     setDonor(res.data);
+   });
+   }, []);
+
+   
+   
+   
+   
+
+
+
   return (
     <Container>
       
@@ -26,7 +51,9 @@ function Home() {
               className="inline-flex h-10 items-center justify-center rounded-md px-6 text-sm font-medium shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary-950 disabled:pointer-events-none disabled:opacity-50"
               variant="default"
             >
+              <Link to="/explore-ngo">
               Get Involved
+              </Link>
             </Button>
           </div>
         </section>
@@ -41,63 +68,14 @@ function Home() {
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <Card>
-                <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
-                  <img
-                    alt="NGO Logo"
-                    className="rounded-full"
-                    height={80}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "80/80",
-                      objectFit: "cover",
-                    }}
-                    width={80}
-                  />
-                  <div className="space-y-1 text-center">
-                    <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Save the Children</h3>
-                    <p className="text-gray-600 dark:text-gray-400">Empowering children in need worldwide.</p>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
-                  <img
-                    alt="NGO Logo"
-                    className="rounded-full"
-                    height={80}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "80/80",
-                      objectFit: "cover",
-                    }}
-                    width={80}
-                  />
-                  <div className="space-y-1 text-center">
-                    <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Habitat for Humanity</h3>
-                    <p className="text-gray-600 dark:text-gray-400">Building homes, communities, and hope.</p>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
-                  <img
-                    alt="NGO Logo"
-                    className="rounded-full"
-                    height={80}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "80/80",
-                      objectFit: "cover",
-                    }}
-                    width={80}
-                  />
-                  <div className="space-y-1 text-center">
-                    <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Doctors Without Borders</h3>
-                    <p className="text-gray-600 dark:text-gray-400">Providing medical care worldwide.</p>
-                  </div>
-                </CardContent>
-              </Card>
+             {
+              ngo?.data?.map((item) => (
+                <Link  key={item._id} to={`/${item._id}`}>
+                  <NgoHomeCard ngo={item}/>
+                </Link>
+                 
+              ))
+             }
             </div>
           </div>
         </section>
@@ -112,63 +90,15 @@ function Home() {
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <Card>
-                <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
-                  <img
-                    alt="Donor Logo"
-                    className="rounded-full"
-                    height={80}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "80/80",
-                      objectFit: "cover",
-                    }}
-                    width={80}
-                  />
-                  <div className="space-y-1 text-center">
-                    <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">The Giving Foundation</h3>
-                    <p className="text-gray-600 dark:text-gray-400">Empowering communities through philanthropy.</p>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
-                  <img
-                    alt="Donor Logo"
-                    className="rounded-full"
-                    height={80}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "80/80",
-                      objectFit: "cover",
-                    }}
-                    width={80}
-                  />
-                  <div className="space-y-1 text-center">
-                    <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Charitable Foundations</h3>
-                    <p className="text-gray-600 dark:text-gray-400">Investing in a better future for all.</p>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="flex flex-col items-center justify-center p-6 space-y-4">
-                  <img
-                    alt="Donor Logo"
-                    className="rounded-full"
-                    height={80}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "80/80",
-                      objectFit: "cover",
-                    }}
-                    width={80}
-                  />
-                  <div className="space-y-1 text-center">
-                    <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Philanthropic Collective</h3>
-                    <p className="text-gray-600 dark:text-gray-400">Uniting donors to create lasting change.</p>
-                  </div>
-                </CardContent>
-              </Card>
+              {
+                donor?.data?.map((item) => (
+                  <Link  key={item._id} to={`/${item._id}`}>
+
+                   <UserCard user={item}/>
+                  </Link>
+                ))
+              }
+             
             </div>
           </div>
         </section>
