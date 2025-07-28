@@ -28,7 +28,11 @@ const generateAccessTokenAndrefreshToken = async (userId) => {
 
 const registerNgo = asyncHandler(async (req, res) => {
   const {
-    ngoName,
+    ngoName, 
+
+
+
+    
     ngoEmail,
     ngoAddress,
     password,
