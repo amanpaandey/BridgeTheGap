@@ -1,21 +1,19 @@
-# Use an official Node.js image
-FROM node:20
 
-# Set the working directory
+# Use Node.js as base image
+FROM node:20-alpine
+
+# Set working directory
 WORKDIR /app
 
 # Copy package.json and install dependencies
-COPY ../Client/package.json ./
+COPY ../Client/package*.json ./
 RUN npm install
 
-# Copy the rest of the application
-COPY . ./Client ./
+# Copy the rest of the client files
+COPY ../Client ./
 
-# Build your app (optional, if using React/Vue etc.)
-RUN npm run build
-
-# Expose the port your app runs on
+# Expose backend port
 EXPOSE 3000
 
-# Start the app
-CMD ["npm", "dev","run"]
+# Start the server
+CMD ["npm", "run", "dev"]
