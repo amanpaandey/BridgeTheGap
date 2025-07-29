@@ -1,18 +1,18 @@
 # Use an official Node.js image
-FROM node:18
+FROM node:20-alpine
 
 # Set the working directory
 WORKDIR /app
 
 # Copy package.json and install dependencies
-COPY package.json ./
+COPY ../Backend/package*.json ./
 RUN npm install
 
 # Copy the rest of the application
-COPY . .
+COPY . ./Backend ./
 
 # Expose the port your app runs on
 EXPOSE 3000
 
 # Start the app
-CMD ["npm", "dev"]
+CMD ["npm", "dev","run"]
