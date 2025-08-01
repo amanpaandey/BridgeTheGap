@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 import axios from "axios";
 import NgoPostCard from "@/components/NgoPostCardProfile";
+import { API_BASE_URL } from "@/constant";
 
 function NgoProfilePage() {
   const [data, setData] = useState([]);
@@ -17,7 +18,7 @@ function NgoProfilePage() {
 
   useEffect(() => {
     axios
-     .get("http://localhost:8000/api/v1/ngo/current-ngo",{
+     .get(`${API_BASE_URL}/api/v1/ngo/current-ngo`,{
        headers: { 'Content-Type': 'application/json' },
        withCredentials: true,
      })

@@ -3,6 +3,7 @@ import axios from "axios";
 import Container from "@/components/Container";
 import NgoCard from "@/components/NgoCard";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "@/constant";
 
 
 export default function Ngopage() {
@@ -14,7 +15,7 @@ export default function Ngopage() {
     async function fetchData() {
       try {
         const res = await axios.get(
-          "http://localhost:8000/api/v1/ngo/get-all-ngos"
+          `${API_BASE_URL}/api/v1/ngo/get-all-ngos`
         );
         setData(res.data);
       } catch (error) {

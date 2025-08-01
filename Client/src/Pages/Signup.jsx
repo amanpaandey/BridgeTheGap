@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../store/authSlice";
+import { API_BASE_URL } from "@/constant";
 
 export default function UserSignup() {
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ export default function UserSignup() {
       formData.append('fullname', user.fullname);
 
       const response = await axios.post(
-        "http://localhost:8000/api/v1/users/register",
+        `${API_BASE_URL}/api/v1/users/register`,
         formData,
         {
           withCredentials: true,

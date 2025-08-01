@@ -2,6 +2,8 @@
 import Container from "../components/Container";
 import { Button } from "@/components/ui/button"
 
+import { API_BASE_URL } from "@/constant";
+
 
 import { useState,useEffect } from "react";
 import axios from "axios";
@@ -17,12 +19,12 @@ function Home() {
   const [donor, setDonor] = useState([]); 
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/v1/ngo/top-three-ngos")
+    axios.get(`${API_BASE_URL}/api/v1/ngo/top-three-ngos`)
    .then((res) => {
      setNgo(res.data);
    });
 
-   axios.get("http://localhost:8000/api/v1/users/get-latest-users")
+   axios.get(`${API_BASE_URL}/api/v1/users/get-latest-users`)
    .then((res) => {
      setDonor(res.data);
    });

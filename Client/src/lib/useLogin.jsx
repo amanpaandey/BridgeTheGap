@@ -1,6 +1,7 @@
 
 /* import axios from "axios"; */
 
+import { API_BASE_URL } from "@/constant";
 
 export async function login ({username,password}){
 
@@ -35,7 +36,7 @@ const requestOptions = {
   redirect: "follow"
 };
 
-const data = await fetch("http://localhost:8000/api/v1/users/login", requestOptions)
+const data = await fetch(`${API_BASE_URL}/api/v1/users/login`, requestOptions)
   .then((response) => response.json())
   .then((result) => result)
   

@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button"
 import axios from "axios"
 import toast from "react-hot-toast"
 
+import { API_BASE_URL } from "@/constant";
+
 import { useNavigate } from "react-router-dom"
 
 
@@ -29,8 +31,8 @@ const navigate = useNavigate();
          formData.append("description", postDescription);
          formData.append("keywords", postKeywords);
          formData.append("coverImage", postImage);
-         
-       const res =  await axios.post("http://localhost:8000/api/v1/post/addPost", formData,{
+
+       const res =  await axios.post(`${API_BASE_URL}/api/v1/post/addPost`, formData,{
            withCredentials:true,
         });
         if(res.data){

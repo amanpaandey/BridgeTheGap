@@ -2,6 +2,7 @@ import Container from "@/components/Container"
 import { useParams } from "react-router-dom"
 import axios from "axios"
 import { useEffect,useState } from "react"
+import { API_BASE_URL } from "@/constant";
 
 function PostPage() {
 
@@ -9,7 +10,7 @@ function PostPage() {
   const [post, setPost] = useState(null)
 
 useEffect(() => {
-  axios.get(`http://localhost:8000/api/v1/post/get-post/${params.id}`)
+  axios.get(`${API_BASE_URL}/api/v1/post/get-post/${params.id}`)
    .then(res => {
       setPost(res.data)
       console.log(res.data)

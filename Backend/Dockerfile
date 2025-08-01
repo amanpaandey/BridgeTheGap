@@ -6,11 +6,11 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Copy package.json and install dependencies
-COPY ../Backend/package*.json ./
+COPY package*.json .
 RUN npm install
 
 # Copy the rest of the backend files
-COPY ../Backend ./
+COPY . .
 
 # Expose backend port
 EXPOSE 3000

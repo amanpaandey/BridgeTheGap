@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Ngologin as login } from "../store/NgoAuthSlice";
+import { API_BASE_URL } from "@/constant";
 
 export default function NgoSignup() {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ export default function NgoSignup() {
       formData.append("ngoPhone", user.ngoPhone);
 
       const response = await axios.post(
-        "http://localhost:8000/api/v1/ngo/register",
+        `${API_BASE_URL}/api/v1/ngo/register`,
         formData,
         {
           withCredentials: true,

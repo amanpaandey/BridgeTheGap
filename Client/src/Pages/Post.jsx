@@ -10,6 +10,7 @@ import NgoPostCard from "@/components/NgoPostCard";
 import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "@/constant";
 
 function Post() {
   const [data, setData] = useState([]);
@@ -21,7 +22,7 @@ function Post() {
     async function fetchData() {
       try {
         const res = await axios.get(
-          "http://localhost:8000/api/v1/post/get-all-posts"
+          `${API_BASE_URL}/api/v1/post/get-all-posts`
         );
         setData(res.data);
       } catch (error) {

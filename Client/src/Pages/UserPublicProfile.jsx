@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect,useState } from "react";
-
+import { API_BASE_URL } from "@/constant";
 function UserPublicProfile() {
 
     const [loggedInuser, setloggedInuser] = useState("")
@@ -14,7 +14,7 @@ function UserPublicProfile() {
     const {id} = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/api/v1/users/${id}`).then((res) => {
+        axios.get(`${API_BASE_URL}/api/v1/users/${id}`).then((res) => {
             setloggedInuser(res?.data?.data)
         })
     // eslint-disable-next-line react-hooks/exhaustive-deps
