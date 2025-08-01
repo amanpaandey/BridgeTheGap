@@ -1,5 +1,6 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { API_BASE_URL } from "@/constant";
 
 
 const initialState = {
@@ -33,7 +34,7 @@ export const Ngologin = createAsyncThunk("Ngologin",async({username,password}) =
 
 
 
-    const response = await axios.post("api/v1/ngo/login",raw,{
+    const response = await axios.post(`${API_BASE_URL}/api/v1/ngo/login`,raw,{
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true
     })
@@ -44,7 +45,7 @@ export const Ngologin = createAsyncThunk("Ngologin",async({username,password}) =
 })
 
 export const Ngologout  = createAsyncThunk("Ngologout",async()=>{
-const response = await axios.post("api/v1/ngo/logout",{
+const response = await axios.post(`${API_BASE_URL}/api/v1/ngo/logout`,{
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true
 })

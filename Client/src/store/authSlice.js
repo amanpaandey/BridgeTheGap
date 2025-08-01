@@ -1,5 +1,6 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { API_BASE_URL } from "@/constant";
 
 
 const initialState = {
@@ -33,7 +34,7 @@ export const login = createAsyncThunk("login",async({username,password}) =>{
 
 
 
-    const response = await axios.post("api/v1/users/login",raw,{
+    const response = await axios.post(`${API_BASE_URL}/api/v1/users/login`,raw,{
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true
     })
@@ -44,7 +45,7 @@ export const login = createAsyncThunk("login",async({username,password}) =>{
 })
 
 export const logout  = createAsyncThunk("logout",async()=>{
-const response = await axios.post("api/v1/users/logout",{
+const response = await axios.post(`${API_BASE_URL}/api/v1/users/logout`,{
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true
 })
