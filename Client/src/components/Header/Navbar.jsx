@@ -88,7 +88,7 @@ function Header() {
     <Container>
       <nav className="flex justify-between text-3xl my-2 py-2 ">
         <div>
-          <Link to="/">logo</Link>
+          <Link to="/"> BridgeTheGap</Link>
         </div>
         <ul className="flex justify-between gap-6">
           {navItems.map((item) =>
